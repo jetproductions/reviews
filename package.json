@@ -1,0 +1,24 @@
+{
+  "name": "reviews",
+  "version": "1.0.0",
+  "description": "Reviews service/API for ratings and reviews for project Greenfield.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jetproductions/reviews.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jetproductions/reviews/issues"
+  },
+  "homepage": "https://github.com/jetproductions/reviews#readme",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "moment": "^2.24.0"
+  }
+}
