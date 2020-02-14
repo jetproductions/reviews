@@ -19,7 +19,7 @@ function createFakeReview(id){
   let reviewer_email = faker.internet.email()
   let response = faker.lorem.paragraph()
   let helpfulness = [1, 2, 3, 4, 5][Math.floor(Math.random() * 5)]
-  return `${id},${product_id},${review},${date},${summary},${body},${recommend},${reported},${reviewer_name},${reviewer_email},${response},${helpfulness}\n`
+  return `${product_id},${review},${date},${summary},${body},${recommend},${reported},${reviewer_name},${reviewer_email},${response},${helpfulness}\n`
 }
 // Write the data to the supplied writable stream one million times.
 // Be attentive to back-pressure.
@@ -50,7 +50,7 @@ function writeOneMillionTimes(writer, encoding, callback) {
   write();
 }
 
-ws.write(`id,product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response,helpfulness\n`, 'utf-8')
+ws.write(`product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response,helpfulness\n`, 'utf-8')
 writeOneMillionTimes(ws, 'utf-8', () => {
   ws.end()
 })
