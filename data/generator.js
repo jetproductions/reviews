@@ -4,7 +4,7 @@ const moment = require('moment');
 const entries = process.argv[2];
 
 //create write stream to write to
-const ws = fs.createWriteStream('reviews.csv');
+const ws = fs.createWriteStream('faker.csv');
 
 // createFakeReview uses faker to create a fake review line
 function createFakeReview(id){
