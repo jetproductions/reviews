@@ -16,9 +16,16 @@ const list = async (req, res, next) => {
 const meta = async (req, res, next) => {
   const { product } = req.params
   try{
-    const counts = await reviews.ratings(product)
-    const ratings = counts.map(({ rating, count }) => ({ [rating]: count })).reduce((acc, curr) => ({ ...acc, ...curr}), {})
-    res.status(200).json(ratings)
+    const ratingCount = await reviews.ratings(product)
+    const ratings = ratingCount.map(({ rating, count }) => ({ [rating]: count })).reduce((acc, curr) => ({ ...acc, ...curr }), {})
+    const recommendCount = await reviews.recommended(product)
+    const recommended = recommendCount.map(({ recommend, count }) => ({ [Number(recommend)]: count })).reduce((acc, curr) => ({ ...acc, ...curr }), {})
+    const result = {
+      product_id: product,
+      ratings,
+      recommended
+    }
+    res.status(200).json(result)
   }catch(err){
     console.log(err)
     next(err)

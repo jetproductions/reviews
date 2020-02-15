@@ -24,6 +24,16 @@ const reviews = {
       group: ['reviews.rating'],
       raw: true
     })
+  },
+  recommended: (product) => {
+    return Review.findAll({
+      attributes: ['recommend', [Sequelize.fn('count', Sequelize.col('*')), 'count']],
+      where: {
+        product_id: product 
+      },
+      group: ['reviews.recommend'],
+      raw: true
+    })
   }
 }
 
