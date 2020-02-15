@@ -1,4 +1,4 @@
-const { Review } = require('../db')
+const { Review, ReviewPhotos } = require('../db')
 
 const reviews = {
   findAll: (product) => {
@@ -6,6 +6,7 @@ const reviews = {
       where: {
         product_id: product 
       },
+      include: [ReviewPhotos],
       limit: 10
     })
   }

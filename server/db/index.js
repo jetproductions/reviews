@@ -27,4 +27,21 @@ const Review = db.define('reviews', {
   timestamps: false
 })
 
-module.exports = { Review } 
+const ReviewPhotos = db.define('reviews_photos', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true
+  },
+  review_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  url: Sequelize.STRING
+}, {
+  timestamps: false
+})
+
+Review.hasMany(ReviewPhotos, { foreignKey: 'review_id' })
+ReviewPhotos.belongsTo(Review, { foreignKey: 'review_id' })
+
+module.exports = { Review, ReviewPhotos } 
