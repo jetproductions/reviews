@@ -41,7 +41,7 @@ const ReviewPhotos = db.define('reviews_photos', {
   timestamps: false
 })
 
-Review.hasMany(ReviewPhotos, { foreignKey: 'review_id' })
+Review.hasMany(ReviewPhotos, { as: 'photos', foreignKey: 'review_id' })
 ReviewPhotos.belongsTo(Review, { foreignKey: 'review_id' })
 
 module.exports = { Review, ReviewPhotos } 

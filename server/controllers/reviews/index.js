@@ -13,9 +13,16 @@ const list = async (req, res, next) => {
   }
 }
 
-const meta = (req, res, next) => {
+const meta = async (req, res, next) => {
   const { product } = req.params
-  res.send(`list route for /reviews/${product}/list`)
+  try{
+    const counts = await reviews.ratings(product)
+    const ratings = counts.map(({ rating, count }) => ({ [rating]: count })).reduce((acc, curr) => ({ ...acc, ...curr}), {})
+    res.status(200).json(ratings)
+  }catch(err){
+    console.log(err)
+    next(err)
+  }
 }
 
 module.exports = { index, list, meta }
