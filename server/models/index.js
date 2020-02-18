@@ -1,4 +1,4 @@
-const { Review, ReviewPhotos } = require('../db')
+const { Review, ReviewPhotos, Characteristic, ReviewCharacteristics } = require('../db')
 const Sequelize = require('sequelize')
 
 const reviews = {
@@ -33,6 +33,19 @@ const reviews = {
       },
       group: ['reviews.recommend'],
       raw: true
+    })
+  },
+  characteristics: (product) => {
+    return ReviewCharacteristics.findAll({
+      attributes: ['characteristic_id', [Sequelize.fn('AVG', Sequelize.col('value')), 'value']],
+      where: {
+        '$characteristic.product_id$': product
+      },
+      include: [{
+        attributes: [],
+        model: Characteristic
+      }],
+      group: ['characteristic_id']
     })
   }
 }

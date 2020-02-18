@@ -41,7 +41,42 @@ const ReviewPhotos = db.define('reviews_photos', {
   timestamps: false
 })
 
+const Characteristic = db.define('characteristics', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true
+  },
+  product_id: {
+    type: Sequelize.INTEGER,
+  },
+  name: {
+      type: Sequelize.STRING
+  }
+}, {
+  timestamps: false
+})
+
+const ReviewCharacteristics = db.define('characteristics_reviews', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true
+  },
+  review_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  characteristic_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  }
+}, {
+  timestamps: false
+})
+
 Review.hasMany(ReviewPhotos, { as: 'photos', foreignKey: 'review_id' })
 ReviewPhotos.belongsTo(Review, { foreignKey: 'review_id' })
 
-module.exports = { Review, ReviewPhotos } 
+Characteristic.hasMany(ReviewCharacteristics, { foreignKey: 'characteristic_id' })
+ReviewCharacteristics.belongsTo(Characteristic, { foreignKey: 'characteristic_id' })
+
+module.exports = { Review, ReviewPhotos, ReviewCharacteristics, Characteristic } 

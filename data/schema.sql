@@ -1,4 +1,4 @@
-DROP DATABASE reviews;
+DROP DATABASE IF EXISTS reviews;
 
 CREATE DATABASE reviews WITH OWNER = reviews;
 
