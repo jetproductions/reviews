@@ -72,6 +72,9 @@ const ReviewCharacteristics = db.define('characteristics_reviews', {
   characteristic_id: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  value: {
+    type: Sequelize.INTEGER,
   }
 }, {
   timestamps: false
@@ -81,7 +84,7 @@ Review.Photos = Review.hasMany(ReviewPhotos, { as: 'photos', foreignKey: 'review
 ReviewPhotos.belongsTo(Review, { foreignKey: 'review_id' })
 
 //Need association for create
-Review.hasMany(ReviewCharacteristics, { foreignKey: 'review_id'})
+Review.Characteristics = Review.hasMany(ReviewCharacteristics, { foreignKey: 'review_id'})
 ReviewCharacteristics.belongsTo(Review, { foreignKey: 'review_id' })
 
 Characteristic.hasMany(ReviewCharacteristics, { foreignKey: 'characteristic_id' })
