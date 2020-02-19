@@ -5,7 +5,8 @@ const reviews = {
   findAll: (product) => {
     return Review.findAll({
       where: {
-        product_id: product 
+        product_id: product,
+        reported: false 
       },
       include: [{
         model: ReviewPhotos,
@@ -72,6 +73,24 @@ const reviews = {
       }]
     })
     return instance.save() 
+  },
+  updateHelpful: (id) => {
+    return Review.update({
+      helpfulness: Sequelize.literal('helpfulness + 1')
+    }, {
+      where: {
+        id
+      }
+    })
+  },
+  updateReport: (id) => {
+    return Review.update({
+      reported: true 
+    }, {
+      where: {
+        id
+      }
+    })
   }
 }
 

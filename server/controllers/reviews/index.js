@@ -47,4 +47,26 @@ const add = async (req, res, next) => {
   }
 }
 
-module.exports = { index, list, meta, add }
+const helpful = async (req, res, next) => {
+  const { review } = req.params
+  try{
+    const updated = await reviews.updateHelpful(review)
+    res.status(204).end()
+  }catch(err){
+    console.log(err)
+    next(err)
+  }
+}
+
+const report = async (req, res, next) => {
+  const { review } = req.params
+  try{
+    const updated = await reviews.updateReport(review)
+    res.status(204).end()
+  }catch(err){
+    console.log(err)
+    next(err)
+  }
+}
+
+module.exports = { index, list, meta, add, helpful, report }

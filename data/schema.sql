@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   reviewer_name VARCHAR,
   reviewer_email VARCHAR,
   response VARCHAR,
-  helpfulness SMALLINT
+  helpfulness SMALLINT DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS characteristics (
