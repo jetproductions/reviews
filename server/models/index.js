@@ -37,7 +37,7 @@ const reviews = {
   },
   characteristics: (product) => {
     return ReviewCharacteristics.findAll({
-      attributes: ['characteristic_id', [Sequelize.fn('AVG', Sequelize.col('value')), 'value']],
+      attributes: [['characteristic_id', 'id'], [Sequelize.fn('AVG', Sequelize.col('value')), 'value']],
       where: {
         '$characteristic.product_id$': product
       },
@@ -45,8 +45,29 @@ const reviews = {
         attributes: [],
         model: Characteristic
       }],
-      group: ['characteristic_id']
+      group: ['characteristic_id'],
+      raw: true
     })
+  },
+  create: (review) => {
+    const { product_id, rating, summary, body, recommend, name, email, photos, characteristics } = review
+    const urls = photos.map(url => ({ url }))
+    const instance = Review.build({
+      product_id,
+      rating,
+      summary,
+      body,
+      recommend,
+      reviewer_name: name,
+      reviewer_email: email,
+      photos: urls 
+    }, {
+      include: [{
+        association: Review.Photos,
+        as: 'photos'
+      }]
+    })
+    return instance.save() 
   }
 }
 

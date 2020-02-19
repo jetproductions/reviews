@@ -6,8 +6,9 @@ const db = new Sequelize('reviews', 'tthenne', '', {
  
 const Review = db.define('reviews', {
   id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true
+    type: Sequelize.UUID,
+    primaryKey: true,
+    autoIncrement: true
   },
   product_id: {
     type: Sequelize.INTEGER,
@@ -29,8 +30,9 @@ const Review = db.define('reviews', {
 
 const ReviewPhotos = db.define('reviews_photos', {
   id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true
+    type: Sequelize.UUID,
+    primaryKey: true,
+    autoIncrement: true
   },
   review_id: {
     type: Sequelize.INTEGER,
@@ -43,8 +45,9 @@ const ReviewPhotos = db.define('reviews_photos', {
 
 const Characteristic = db.define('characteristics', {
   id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true
+    type: Sequelize.UUID,
+    primaryKey: true,
+    autoIncrement: true
   },
   product_id: {
     type: Sequelize.INTEGER,
@@ -58,8 +61,9 @@ const Characteristic = db.define('characteristics', {
 
 const ReviewCharacteristics = db.define('characteristics_reviews', {
   id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true
+    type: Sequelize.UUID,
+    primaryKey: true,
+    autoIncrement: true
   },
   review_id: {
     type: Sequelize.INTEGER,
@@ -73,8 +77,12 @@ const ReviewCharacteristics = db.define('characteristics_reviews', {
   timestamps: false
 })
 
-Review.hasMany(ReviewPhotos, { as: 'photos', foreignKey: 'review_id' })
+Review.Photos = Review.hasMany(ReviewPhotos, { as: 'photos', foreignKey: 'review_id' })
 ReviewPhotos.belongsTo(Review, { foreignKey: 'review_id' })
+
+//Need association for create
+Review.hasMany(ReviewCharacteristics, { foreignKey: 'review_id'})
+ReviewCharacteristics.belongsTo(Review, { foreignKey: 'review_id' })
 
 Characteristic.hasMany(ReviewCharacteristics, { foreignKey: 'characteristic_id' })
 ReviewCharacteristics.belongsTo(Characteristic, { foreignKey: 'characteristic_id' })
