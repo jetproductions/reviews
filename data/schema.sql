@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS reviews;
 
-CREATE DATABASE reviews WITH OWNER = reviews;
+CREATE DATABASE reviews WITH OWNER = docker;
 
 \c reviews;
 
@@ -19,11 +19,15 @@ CREATE TABLE IF NOT EXISTS reviews (
   helpfulness SMALLINT DEFAULT 0
 );
 
+CREATE INDEX idx_reviews_product_id ON reviews(product_id);
+
 CREATE TABLE IF NOT EXISTS characteristics (
   id SERIAL PRIMARY KEY,
   product_id INTEGER NOT NULL, 
   name VARCHAR
 );
+
+CREATE INDEX idx_product_id ON characteristics(product_id);
 
 CREATE TABLE IF NOT EXISTS characteristics_reviews (
   id SERIAL PRIMARY KEY,
@@ -31,6 +35,9 @@ CREATE TABLE IF NOT EXISTS characteristics_reviews (
   review_id INTEGER,
   value INTEGER
 );
+
+CREATE INDEX idx_characteristic_id ON characteristics_reviews(characteristic_id);
+CREATE INDEX idx_review_id ON characteristics_reviews(review_id);
 
 CREATE TABLE IF NOT EXISTS reviews_photos (
   id SERIAL PRIMARY KEY,

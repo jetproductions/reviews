@@ -21,7 +21,7 @@ const meta = async (req, res, next) => {
     const recommendCount = await reviews.recommended(product)
     const recommended = recommendCount.map(({ recommend, count }) => ({ [Number(recommend)]: count })).reduce((acc, curr) => ({ ...acc, ...curr }), {})
     const characteristicMeta = await reviews.characteristics(product) 
-    const characteristics = characteristicMeta.map(({id, value}) => ({[id]: Number.parseFloat(value).toFixed(2)})).reduce((acc, curr) => ({...acc, ...curr}), {})
+    const characteristics = characteristicMeta.map(({id, name, value}) => ({ [name]: { id, value: Number.parseFloat(value).toFixed(2) } })).reduce((acc, curr) => ({...acc, ...curr}), {})
     const result = {
       product_id: product,
       ratings,

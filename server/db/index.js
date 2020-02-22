@@ -1,8 +1,11 @@
 const Sequelize = require('sequelize');
+const DB_NAME = process.env.DB_NAME || 'reviews'
+const DB_USER = process.env.DB_USER || 'docker'
+const DB_PASSWORD = process.env.DB_PASSWORD || 'docker'
+const DB_PORT = process.env.DB_PORT || 5400
+const DB_HOST = process.env.DB_HOST || 'localhost'
  
-const db = new Sequelize('reviews', 'tthenne', '', {
-  dialect: 'postgres'
-})
+const db = new Sequelize(`postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`)
  
 const Review = db.define('reviews', {
   id: {

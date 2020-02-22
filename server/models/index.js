@@ -38,15 +38,15 @@ const reviews = {
   },
   characteristics: (product) => {
     return ReviewCharacteristics.findAll({
-      attributes: [['characteristic_id', 'id'], [Sequelize.fn('AVG', Sequelize.col('value')), 'value']],
+      attributes: [['characteristic_id', 'id'], [Sequelize.literal('"characteristic"."name"'), 'name'], [Sequelize.fn('AVG', Sequelize.col('value')), 'value']],
       where: {
-        '$review.product_id$': product
+        '$characteristic.product_id$': product
       },
       include: [{
         attributes: [],
-        model: Review 
+        model: Characteristic
       }],
-      group: ['characteristic_id'],
+      group: ['characteristic_id', 'name'],
       raw: true
     })
   },

@@ -4,7 +4,7 @@
   "description": "Reviews service/API for ratings and reviews for project Greenfield.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/app.js",
+    "start": "DB_USER=tthenne DB_PASSWORD='' DB_HOST=localhost DB_PORT=5432 DB_NAME=reviews nodemon server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
