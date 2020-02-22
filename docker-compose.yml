@@ -22,9 +22,9 @@ services:
   api:
     build: .
     container_name: api-docker
-    command: node app.js --port 3000
+    command: pm2-runtime ecosystem.config.js 
     ports:
-      - "3000:3000"
+      - "3333:3333"
     depends_on:
       - postgresql
     environment:
