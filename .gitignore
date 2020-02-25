@@ -2,7 +2,7 @@
 node_modules
 
 # CSV files
-*.csv
+data/csv
 
 # DS_Store
 .DS_Store
