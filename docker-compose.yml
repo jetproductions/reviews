@@ -2,25 +2,20 @@ version: '3'
 
 services:
   postgresql:
-    image: postgres
+    build: ./data
     container_name: pg-docker
-    expose:
-      - "5400"
     ports:
-      - "5400:5400"
+      - "5432:5432"
     environment:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=docker
     volumes:
-      - ./data/postgres.conf:/etc/postgresql/postgresql.conf
-      - ./data:/var/data
-      - ./data/schema.sql:/docker-entrypoint-initdb.d/schema.sql
-      - ./data/seed.sh:/docker-entrypoint-initdb.d/seed.sh
-    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+      - /var/data/
+      - /var/storage:/var/lib/postgresql/data
     restart: always
   
   api:
-    build: .
+    build: ./server
     container_name: api-docker
     command: pm2-runtime ecosystem.config.js 
     ports:
@@ -30,9 +25,8 @@ services:
     environment:
       - DB_HOST=postgresql
       - DB_NAME=reviews
-      - DB_PORT=5400
+      - DB_PORT=5432
       - DB_USER=docker
       - DB_PASSWORD=docker
     volumes:
-      - ./server:/usr/src/app
-      - /usr/src/app/node_modules
+      - /usr/src/reviews/server
